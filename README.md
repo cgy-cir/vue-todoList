@@ -1,6 +1,8 @@
+一个vue脚手架搭建的todoList小demo
+
 预览地址：https://cgy-cir.github.io/vue-todoList/
 
-# vue-todo
+# vue-todoList
 
 ## Project setup
 ```

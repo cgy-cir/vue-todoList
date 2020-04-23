@@ -4,8 +4,8 @@
     <span
       v-for="(state,index) in states"
       :key="index"
-      @click="$emit('toggleFilter',state);changeActive(state)"
-      class="abc"
+      @click="$emit('toggleFilter',state);changeActive(index)"
+      :class="{active:index === activeIndex}"
     >{{state}}</span>
     <span class="clear-finish" @click="$emit('clearAllCompleted')" v-show="show">清除已完成</span>
   </div>
@@ -25,12 +25,9 @@ export default {
   },
   data() {
     return {
-      states: ["全部", "未完成", "已完成"]
+      states: ["全部", "未完成", "已完成"],
+      activeIndex: 0
     };
-  },
-  mounted() {
-    let all = document.getElementsByClassName("abc")[0];
-    all.classList.add("active");
   },
   computed: {
     unfinishItem() {
@@ -41,23 +38,8 @@ export default {
     }
   },
   methods: {
-    changeActive(state) {
-      let all = document.getElementsByClassName("abc")[0];
-      let unfinish = document.getElementsByClassName("abc")[1];
-      let finished = document.getElementsByClassName("abc")[2];
-      all.className = "";
-      unfinish.className = "";
-      finished.className = "";
-      if (state == "全部") {
-        all.classList.add("active");
-      } else if (state == "未完成") {
-        unfinish.classList.add("active");
-      } else if (state == "已完成") {
-        finished.classList.add("active");
-      }
-      all.classList.add("abc");
-      unfinish.classList.add("abc");
-      finished.classList.add("abc");
+    changeActive(index) {
+      this.activeIndex = index;
     }
   }
 };

@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-
+# 命令： sh deploy.sh 在 git 里运行即可
 # 当发生错误时中止脚本
 set -e
 

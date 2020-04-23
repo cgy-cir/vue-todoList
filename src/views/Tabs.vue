@@ -34,10 +34,10 @@ export default {
   },
   computed: {
     unfinishItem() {
-      return this.todos.filter(todo => !todo.state).length;
+      return this.todos.filter(todo => todo.isDone === false).length;
     },
     show() {
-      return this.todos.filter(todo => todo.state).length !== 0;
+      return this.todos.filter(todo => todo.isDone).length !== 0;
     }
   },
   methods: {

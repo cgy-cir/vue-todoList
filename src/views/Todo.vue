@@ -54,11 +54,10 @@ export default {
   methods: {
     addNewTodo() {
       if (this.newTodoText) {
-        console.log(1);
         this.todos.push({
           id: this.nextTodoId++,
           title: this.newTodoText,
-          state: false,
+          isDone: false,
           isEdit: false
         });
         this.newTodoText = "";
@@ -74,20 +73,20 @@ export default {
       this.active = state;
     },
     clearAllCompleted() {
-      this.todos = this.todos.filter(todo => !todo.state);
+      this.todos = this.todos.filter(todo => !todo.isDone);
     },
     //完成全选按钮
     allSelected() {
       if (
         this.todos.length ==
-        this.todos.filter(todo => todo.state == true).length
+        this.todos.filter(todo => todo.isDone == true).length
       ) {
         this.todos.map(todo => {
-          todo.state = false;
+          todo.isDone = false;
         });
       } else {
         this.todos.map(todo => {
-          todo.state = true;
+          todo.isDone = true;
         });
       }
     }
@@ -97,9 +96,9 @@ export default {
       if (this.active === "全部") {
         return this.todos;
       }
-      //判断点击的是不是 completed ，筛选 completed 与 active是否相等
-      const completed = this.active === "已完成";
-      return this.todos.filter(todo => completed === todo.state);
+      return this.todos.filter(todo =>
+        this.active === "已完成" ? todo.isDone : !todo.isDone
+      );
     }
   }
 };

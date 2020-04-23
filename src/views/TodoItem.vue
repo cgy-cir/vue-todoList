@@ -1,26 +1,26 @@
 <template>
   <div class="todo-item">
-    <input class="todo-checkbox" type="checkbox" v-model="todo.state" />
+    <input class="todo-checkbox" type="checkbox" v-model="todo.isDone" />
     <span
-      class="todo-title"
-      :class="{active:todo.state}"
       v-if="!todo.isEdit"
+      class="todo-title"
+      :class="{active:todo.isDone}"
       v-text="todo.title"
       @click="todo.isEdit = !todo.isEdit"
     ></span>
     <!-- 可修改 -->
     <input
-      :class="{active:todo.state}"
-      class="edit-title"
       v-else
+      :class="{active:todo.isDone}"
+      class="edit-title"
       type="text"
       v-model="todo.title"
       @blur="todo.isEdit = !todo.isEdit"
-      @keyup.enter="todo.isEdit = !todo.isEdit"
-      :disabled="todo.state"
+      @keydown.enter="enterBlur"
+      :disabled="todo.isDone"
+      v-focus
     />
-
-    <button class="remove-title" v-show="todo.state" @click="$emit('remove')">删除</button>
+    <button class="remove-title" v-show="todo.isDone" @click="$emit('remove')">删除</button>
   </div>
 </template>
 
@@ -34,6 +34,19 @@ export default {
   },
   data() {
     return {};
+  },
+  //自定义指令，当要修改 todo 时，可以直接聚焦。
+  directives: {
+    focus: {
+      inserted(elem) {
+        elem.focus();
+      }
+    }
+  },
+  methods: {
+    enterBlur(e) {
+      e.target.blur();
+    }
   }
 };
 </script>
@@ -51,6 +64,7 @@ export default {
   color: gainsboro;
 }
 .todo-title {
+  cursor: pointer;
   text-align: left;
   line-height: 30px;
   display: inline-block;
